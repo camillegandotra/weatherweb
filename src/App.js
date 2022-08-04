@@ -1,23 +1,69 @@
-import logo from './logo.svg';
+import React, {useState} from 'react';
+import axios from 'axios';
 import './App.css';
 
 function App() {
+  
+  const[data,setData] = useState([])
+  const[location,setLocation] = useState('')
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=5a98450152a2806af37e02322628e120`
+  
+  
+  const searchLocation = (event) => {
+    if (event.key === 'Enter') {
+      axios.get(url).then((response) => {
+        setData(response.data)
+        console.log(response.data)
+      })
+      setLocation('')
+     }
+    }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div className="search">
+        <input
+        value={location}
+        onChange={event => setLocation(event.target.value)}
+        onKeyPress={searchLocation}
+        placeholder='Enter City, Country'
+        type="text"/>
+      </div>
+      <div className="container">
+
+        <div className="top">
+
+            <div className="name">
+              <h2>WeatherPoop</h2>
+            </div>
+            <div className="location">
+
+              {data.sys ? <p>{data.name}, {data.sys.country}</p> : null}
+            </div>
+            <div className="temperature">
+              {data.main ? <h1>{data.main.temp.toFixed()}°F</h1> : null}
+            </div>
+            <div className="condition">
+              {data.weather ? <p>{data.weather[0].main}</p> : null}
+            </div>
+           
+
+        <div className="bottom">
+            <div className="feels">
+              {data.main ? <p>{data.main.feels_like.toFixed()}°F</p> : null}
+            </div>
+            <div className="humidity">
+              {data.main ? <p>{data.main.humidity.toFixed()}%</p> : null}
+
+            </div>
+            <div className="wind">
+              {data.wind ? <p>{data.wind.speed.toFixed()} MPH</p> : null}
+            </div>
+        </div>
+
+        </div>
+      </div>
+
     </div>
   );
 }
