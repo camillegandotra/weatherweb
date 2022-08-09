@@ -21,23 +21,27 @@ function App() {
 
   return (
     <div className="app">
-      <div className="search">
-        <input
-        value={location}
-        onChange={event => setLocation(event.target.value)}
-        onKeyPress={searchLocation}
-        placeholder='Enter City, Country'
-        type="text"/>
-      </div>
-      <div className="container">
+        <div className="right">
+          <div className="search">
+            <input
+            value={location}
+            onChange={event => setLocation(event.target.value)}
+            onKeyPress={searchLocation}
+            placeholder='Enter City, Country'
+            type="text"/>
+          </div>
+        </div>
+    
+        <div className="header">
+            <h2>WeatherNow</h2>
+        </div>
+        
 
-        <div className="top">
-
-            <div className="name">
-              <h2>WeatherPoop</h2>
-            </div>
+        {data.name != undefined && 
+        <div className="container">
+          <div className="top">
+          
             <div className="location">
-
               {data.sys ? <p>{data.name}, {data.sys.country}</p> : null}
             </div>
             <div className="temperature">
@@ -46,25 +50,32 @@ function App() {
             <div className="condition">
               {data.weather ? <p>{data.weather[0].main}</p> : null}
             </div>
-           
-
-        <div className="bottom">
+          </div>
+        </div>
+}
+        {data.name != undefined && 
+        <div className="container">
+          <div className="bottom">
             <div className="feels">
-              {data.main ? <p>{data.main.feels_like.toFixed()}°F</p> : null}
+              {data.main ? <p className='bold'>{data.main.feels_like.toFixed()}°F</p> : null}
+              <p>Feels Like</p>
             </div>
             <div className="humidity">
-              {data.main ? <p>{data.main.humidity.toFixed()}%</p> : null}
-
+              {data.main ? <p className='bold'>{data.main.humidity.toFixed()}%</p> : null}
+              <p>Humidity</p>
             </div>
             <div className="wind">
-              {data.wind ? <p>{data.wind.speed.toFixed()} MPH</p> : null}
+              {data.wind ? <p className='bold'>{data.wind.speed.toFixed()} MPH</p> : null}
+              <p>Wind Speed</p>
             </div>
+          </div>
         </div>
-
-        </div>
-      </div>
-
+      }
+        
     </div>
+  
+  
+
   );
 }
 
