@@ -20,8 +20,12 @@ function App() {
     }
 
   return (
+    
     <div className="app">
-        <div className="right">
+        <div className="header">
+        <div className="name">
+            <h2>WeatherNow</h2>
+        </div>
           <div className="search">
             <input
             value={location}
@@ -30,11 +34,10 @@ function App() {
             placeholder='Enter City, Country'
             type="text"/>
           </div>
-        </div>
+        
     
-        <div className="header">
-            <h2>WeatherNow</h2>
-        </div>
+    
+      </div>
         
 
         {data.name != undefined && 
